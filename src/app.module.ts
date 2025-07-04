@@ -5,6 +5,7 @@ import { TypeOrmConfigService } from './api/v1/configuration/typeorm-connfig.ser
 import { VoterModule } from './api/v1/voter/voter.module';
 import { CandidateModule } from './api/v1/candidate/candidate.module';
 import { VoteModule } from './api/v1/vote/vote.module';
+import { AuthModule } from './api/v1/auth/auth.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { VoteModule } from './api/v1/vote/vote.module';
     VoterModule,
     CandidateModule,
     VoteModule,
+    AuthModule
   ],
 })
 export class AppModule {}

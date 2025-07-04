@@ -36,8 +36,6 @@ export class VoteService {
     };
 
     Object.values(statistics).forEach((stat: { percentage: number, votes: number }) => {
-      console.log(stat);
-      
       stat.percentage = (stat.votes * 100) / votes.length;
     });
     return {
@@ -70,10 +68,10 @@ export class VoteService {
     return { voter, candidate };
   }
 
-  async create(vote: CreateVoteDto): Promise<Vote> {
+  async create(vote: CreateVoteDto, voterId: number): Promise<Vote> {
     return this.dataSource.transaction(async (transactionalEntityManager) => {
       const { voter, candidate } = await this.isValidVote(
-        vote.voter_id,
+        voterId,
         vote.candidate_id,
         transactionalEntityManager,
       );
