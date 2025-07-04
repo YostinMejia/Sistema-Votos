@@ -10,9 +10,9 @@ export class VoterService {
   constructor(
     @InjectRepository(VoterTypeOrm)
     private voterRepository: Repository<VoterTypeOrm>,
-    @Inject(forwardRef(()=>CandidateService))
-    private candidateService: CandidateService
-  ) { }
+    @Inject(forwardRef(() => CandidateService))
+    private candidateService: CandidateService,
+  ) {}
 
   findAll(): Promise<Voter[]> {
     return this.voterRepository.find();
@@ -24,7 +24,9 @@ export class VoterService {
 
   async create(createVoterDto: CreateVoterDto): Promise<Voter> {
     if (await this.candidateService.findByName(createVoterDto.name))
-      throw new BadRequestException("A Voter can't be a Candidate and vice versa",);
+      throw new BadRequestException(
+        "A Voter can't be a Candidate and vice versa",
+      );
 
     if (await this.voterRepository.findOneBy({ email: createVoterDto.email }))
       throw new BadRequestException('Email registered already');

@@ -6,7 +6,10 @@ import { CandidateTypeOrm } from './infrastructure/typeorm/candidate-typeorm.ent
 import { VoterModule } from '../voter/voter.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CandidateTypeOrm]), forwardRef(()=>VoterModule)],
+  imports: [
+    TypeOrmModule.forFeature([CandidateTypeOrm]),
+    forwardRef(() => VoterModule),
+  ],
   controllers: [CandidateController],
   exports: [CandidateService],
   providers: [CandidateService],

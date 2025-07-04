@@ -1,4 +1,3 @@
-
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
@@ -8,7 +7,7 @@ import { Voter } from 'src/api/v1/voter/domain/voter.interface';
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
-    super({passwordField:"email"});
+    super({ passwordField: 'email' });
   }
 
   async validate(username: string, email: string): Promise<Voter> {

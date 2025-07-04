@@ -15,10 +15,10 @@ export class VoteTypeOrm {
   @PrimaryGeneratedColumn('increment')
   id: number;
   @Index({ unique: true })
-  @OneToOne(() => VoterTypeOrm)
+  @OneToOne(() => VoterTypeOrm, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'voter_id' })
   voter: VoterTypeOrm;
-  @ManyToOne(() => CandidateTypeOrm)
+  @ManyToOne(() => CandidateTypeOrm, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'candidate_id' })
   candidate: CandidateTypeOrm;
 

@@ -1,16 +1,15 @@
-import { Controller, Post, Request, UseGuards } from "@nestjs/common";
-import { LocalAuthGuard } from "../application/guards/local-auth.guard";
-import { JwtAuthGuard } from "../application/guards/jwt-auth.guard";
-import { AuthService } from "../application/services/auth.service";
+import { Controller, Post, Request, UseGuards } from '@nestjs/common';
+import { LocalAuthGuard } from '../application/guards/local-auth.guard';
+import { AuthService } from '../application/services/auth.service';
+import { Voter } from '../../voter/domain/voter.interface';
 
-@Controller("auth")
+@Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
-    @UseGuards(LocalAuthGuard)
-    @Post('login')
-    async login(@Request() req) {
-        return this.authService.login(req.user)
-    }
-
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  login(@Request() req: { user: Voter }) {
+    return this.authService.login(req.user);
+  }
 }

@@ -16,7 +16,7 @@ import { AuthModule } from './api/v1/auth/auth.module';
     VoterModule,
     CandidateModule,
     VoteModule,
-    AuthModule
+    AuthModule,
   ],
 })
 export class AppModule {}

@@ -1,4 +1,9 @@
-import { BadRequestException, forwardRef, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  forwardRef,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { CreateCandidateDto } from '../dto/create-candidate.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CandidateTypeOrm } from '../../infrastructure/typeorm/candidate-typeorm.entity';
@@ -11,17 +16,19 @@ export class CandidateService {
   constructor(
     @InjectRepository(CandidateTypeOrm)
     private candidateRepository: Repository<CandidateTypeOrm>,
-    @Inject(forwardRef(()=>VoterService)) private voterService: VoterService,
+    @Inject(forwardRef(() => VoterService)) private voterService: VoterService,
   ) {}
 
   async create(createCandidateDto: CreateCandidateDto): Promise<Candidate> {
     if (await this.voterService.findByName(createCandidateDto.name))
-      throw new BadRequestException("A Voter can't be a Candidate and vice versa",);
+      throw new BadRequestException(
+        "A Voter can't be a Candidate and vice versa",
+      );
     return this.candidateRepository.save(createCandidateDto);
   }
 
-  findByName(name:string):Promise<Candidate|null>{
-    return this.candidateRepository.findOneBy({name})
+  findByName(name: string): Promise<Candidate | null> {
+    return this.candidateRepository.findOneBy({ name });
   }
   addVote(id: number, votes: number) {
     return this.candidateRepository.update({ id }, { votes: votes + 1 });

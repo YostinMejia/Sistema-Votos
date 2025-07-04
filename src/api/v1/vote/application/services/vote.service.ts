@@ -13,36 +13,38 @@ export class VoteService {
     @InjectRepository(VoteTypeOrm)
     private voteRepository: Repository<VoteTypeOrm>,
     private dataSource: DataSource,
-  ) { }
+  ) {}
 
   findAll(): Promise<Vote[]> {
     return this.voteRepository.find();
   }
 
   async statistics(): Promise<VoteStatistics> {
-    const votes = await this.voteRepository.find({ relations: { candidate: true } })
-    const statistics = {}
+    const votes = await this.voteRepository.find({
+      relations: { candidate: true },
+    });
+    const statistics = {};
 
     for (const vote of votes) {
-
       if (!statistics[vote.candidate.id]) {
         statistics[vote.candidate.id] = {
           votes: 0,
           candidate: vote.candidate.name,
-          percentage: 0
+          percentage: 0,
         };
       }
       statistics[vote.candidate.id].votes += 1;
-    };
+    }
 
-    Object.values(statistics).forEach((stat: { percentage: number, votes: number }) => {
-      stat.percentage = (stat.votes * 100) / votes.length;
-    });
+    Object.values(statistics).forEach(
+      (stat: { percentage: number; votes: number }) => {
+        stat.percentage = (stat.votes * 100) / votes.length;
+      },
+    );
     return {
       data: Object.values(statistics),
-      totalVotes: votes.length
-
-    }
+      totalVotes: votes.length,
+    };
   }
 
   async isValidVote(
